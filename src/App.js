@@ -123,7 +123,6 @@ class App extends Component {
         {this.state.serverData.user.playlists.map(playlist =>
           <Playlist playlist={playlist}/>
         )}
-        {playlistElements}
       </div> : <h1 style={defaultStyle}>Loading...</h1>
       }
       </div>
