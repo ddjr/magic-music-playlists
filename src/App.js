@@ -122,13 +122,12 @@ class App extends Component {
               </div>
             }
           </div>
-        : <button style={{'padding': '20px', 'fontSize': '50px', 'marginTop': '20px'}} onClick={() =>
-          if (window.location.includes('localhost')) {
-            window.location = "http://localhost:8888/login"
-          } else {
-            window.location = 'https://spotify-backend-playlist.herokuapp.com/'
-          }
-        }>Sign in with Spotify</button>
+        : <button onClick={() => {
+          window.location =  window.location.href.includes('localhost')
+          ? 'http://localhost:8888/login'
+          : 'https://spotify-backend-playlist.herokuapp.com/login' }
+        }
+        style={{'padding': '20px', 'fontSize': '50px', 'marginTop': '20px'}} >Sign in with Spotify</button>
       }
       </div>
     );
