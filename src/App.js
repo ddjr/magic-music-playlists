@@ -69,7 +69,7 @@ class App extends Component {
   componentDidMount() {
     let parsed = queryString.parse(window.location.search)
     let accessToken = parsed.access_token
-
+    if (!accessToken) { return }
     fetch('https://api.spotify.com/v1/me', {headers: {'Authorization': 'Bearer ' + accessToken}})
     .then(response => response.json())
     .then(data => this.setState({
@@ -87,6 +87,7 @@ class App extends Component {
         songs:[]
       }))
     }))
+    
   }
 
   filterPlaylists() {
@@ -104,21 +105,23 @@ class App extends Component {
 
     return (
       <div className="App">
-        {this.state.user ?
-        <div>
-          <h1 style={{...defaultStyle, 'fontSize':' 54px'}}>
-            {this.state.user.name}'s Playlists
-          </h1>
-          {this.state.playlists &&
-          <div>
-            <PlaylistCounter playlists={playlistsToRender} />
-            <HoursCounter playlists={playlistsToRender} />
-            <Filter onTextChange={text => this.setState({filterString: text})}/>
-            {playlistsToRender.map(playlist =>
-              <Playlist playlist={playlist}/>
-            )}
-          </div> }
-      </div> : <button style={{'padding': '20px', 'fontSize': '50px', 'marginTop': '20px'}} onClick={() => window.location="http://localhost:8888/login"}>Sign in with Spotify</button>
+      {this.state.user
+        ? <div>
+            <h1 style={{...defaultStyle, 'fontSize':' 54px'}}>
+              {this.state.user.name}'s Playlists
+            </h1>
+            {this.state.playlists &&
+              <div>
+                <PlaylistCounter playlists={playlistsToRender} />
+                <HoursCounter playlists={playlistsToRender} />
+                <Filter onTextChange={text => this.setState({filterString: text})}/>
+                {playlistsToRender.map(playlist =>
+                  <Playlist playlist={playlist}/>
+                )}
+              </div>
+            }
+          </div>
+        : <button style={{'padding': '20px', 'fontSize': '50px', 'marginTop': '20px'}} onClick={() => window.location="http://localhost:8888/login"}>Sign in with Spotify</button>
       }
       </div>
     );
