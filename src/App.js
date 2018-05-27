@@ -61,7 +61,7 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      user: {},
+      user: null,
       playlists: [],
       filterString: ''
     }
@@ -69,7 +69,8 @@ class App extends Component {
   componentDidMount() {
     let parsed = queryString.parse(window.location.search)
     let accessToken = parsed.access_token
-    if (!accessToken) { return }
+    if (!accessToken) {return }
+
     fetch('https://api.spotify.com/v1/me', {headers: {'Authorization': 'Bearer ' + accessToken}})
     .then(response => response.json())
     .then(data => this.setState({
@@ -87,7 +88,7 @@ class App extends Component {
         songs:[]
       }))
     }))
-    
+
   }
 
   filterPlaylists() {
