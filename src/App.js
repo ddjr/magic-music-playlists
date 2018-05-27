@@ -88,16 +88,8 @@ class App extends Component {
       }
     }))
 
-   // this.fetchFromAPI('https://api.spotify.com/v1/me/playlists', accessToken)
-   // .then(data => this.setState({
-   //   playlists: data.items.map(item => ({
-   //     name: item.name,
-   //     imageUrl: item.images[0].url,
-   //     songs:[]
-   //   }))
-   // }))
    this.fetchFromAPI('https://api.spotify.com/v1/me/playlists', accessToken)
-  .then(playlistData => {
+   .then(playlistData => {
     let playlists = playlistData.items
     let trackDataPromises = playlists.map(playlist => {
       let responsePromise = fetch(playlist.tracks.href, {
@@ -138,9 +130,13 @@ class App extends Component {
     return (
       this.state.user &&
       this.state.playlists
-        ? this.state.playlists.filter(playlist =>
-          playlist.name.toLowerCase().includes(
+        ? this.state.playlists.filter(playlist => {
+          let matchesPlaylist = playlist.name.toLowerCase().includes(
+            this.state.filterString.toLowerCase())
+          let matchesSong = playlist.songs.find(song => song.name.toLowerCase().includes(
             this.state.filterString.toLowerCase()))
+          return matchesPlaylist || matchesSong
+        })
         : []
     )
   }
