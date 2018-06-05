@@ -1,11 +1,12 @@
 html {
+  min-height: 100%;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   background: rgb(2,0,36);
   background: linear-gradient(135deg, rgba(2,0,36,1) 0%, rgba(9,41,121,1) 30%, rgba(0,212,255,1) 100%);
-  background-repeat: no-repeat;
+  background-repeat: repeat;
 }
 body {
   /* background-color: #292121; */
