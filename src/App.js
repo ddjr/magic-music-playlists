@@ -5,7 +5,8 @@ import queryString from 'query-string';
 
 let defaultStyle = {
   color: '#fff',
-  'fontFamily': 'Helvetica neue, Helvetica'
+  'fontFamily': 'Helvetica neue, Helvetica',
+  'align': 'center'
 }
 let counterStyle = {...defaultStyle,
   width: '40%',
@@ -13,6 +14,11 @@ let counterStyle = {...defaultStyle,
   'marginBottom': '10px',
   'fontSize': '20px',
   'lineHeight': '30px'
+}
+let playlistsStyle = {
+  'display': 'flex',
+  'flex-flow': 'row wrap',
+  'margin': '20px auto'
 }
 class PlaylistCounter extends Component {
   render() {
@@ -59,15 +65,16 @@ class Filter extends Component {
 class Playlist extends Component {
   render() {
     let playlistStyle = {...defaultStyle,
-      width: '25%',
+      width: '24.8%',
       display: 'inline-block',
       backgroundColor: this.props.index % 2 ? '#C0C0C0' : '#808080',
-      paddingTop: '10px'
+      padding: '10px',
+      'margin': '1px'
     }
     return (
       <div style={playlistStyle} >
-        <img src={this.props.playlist.imageUrl} style={{width: '60px'}}/>
-        <h3>{this.props.playlist.name}</h3>
+        <img src={this.props.playlist.imageUrl} style={{width: '100%'}}/>
+        <h3 style={{fontWeight: 'bold', textDecoration: 'underline'}}>{this.props.playlist.name}</h3>
         <ul style={{marginTop: '10px'}}>
           {this.props.playlist.songs.map(song =>
             <li style={{paddingTop: '2px'}}>{song.name}</li>
@@ -179,9 +186,11 @@ class App extends Component {
                 <PlaylistCounter playlists={playlistsToRender} />
                 <HoursCounter playlists={playlistsToRender} />
                 <Filter onTextChange={text => this.setState({filterString: text})}/>
-                {playlistsToRender.map((playlist, i) =>
-                  <Playlist playlist={playlist} index={i}/>
-                )}
+                <div style={playlistsStyle}>
+                  {playlistsToRender.map((playlist, i) =>
+                    <Playlist playlist={playlist} index={i}/>
+                  )}
+                </div>
               </div>
             }
           </div>
@@ -190,7 +199,7 @@ class App extends Component {
           ? 'http://localhost:8888/login'
           : 'https://spotify-backend-playlist.herokuapp.com/login' }
         }
-        style={{'padding': '20px', 'fontSize': '50px', 'marginTop': '20px'}} >Sign in with Spotify</button>
+        style={{'padding': '20px', 'fontSize': '50px', 'marginTop': '20px', 'margin': '20px 40%'}} >Sign in with Spotify</button>
       }
       </div>
     );
